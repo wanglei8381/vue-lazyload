@@ -30,7 +30,8 @@ var list = [
 ];
 
 Vue.use(vueLazyload, {
-    threshold: 0
+    threshold: 0,
+    class:'loaded'
 });
 
 var vm = new Vue({

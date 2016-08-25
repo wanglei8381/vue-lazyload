@@ -10,6 +10,19 @@
         * {
             margin: 0;
         }
+
+        .lazy {
+            -webkit-transition: opacity 500ms linear;
+            -moz-transition: opacity 500ms linear;
+            -o-transition: opacity 500ms linear;
+            transition: opacity 500ms linear;
+            max-width: 100%;
+            opacity: 0.5;
+        }
+
+        .lazy.loaded {
+            opacity: 1;
+        }
     </style>
 </head>
 <body id="example">
@@ -65,7 +78,7 @@
 
 <ul>
     <li v-for="item of list">
-        <img height="200px" v-lazy="item" alt="加载中...">
+        <img class="lazy" height="200px" v-lazy="item" alt="加载中...">
         <p style="width:100px">preserve-3d符合我们真实世界的思维认识。比方说，你让妹子右转了45度，此时妹子脑袋左转45度想你吐舌卖萌，妹子的脸蛋应该和你是面对面平行的。</p>
     </li>
 </ul>

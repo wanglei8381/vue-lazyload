@@ -20,7 +20,7 @@ lazyload.install = function (Vue, options) {
         bind: function () {
             this._uid = uid++;
             this._isImg = this.el.nodeName.toUpperCase() === 'IMG';
-            if (this._isImg && options.placeholder) {
+            if (this._isImg && options.placeholder && !this.el.src) {
                 this.el.src = options.placeholder;
             }
         },
@@ -46,6 +46,9 @@ lazyload.install = function (Vue, options) {
         let item = stack[key];
         if (item && item.value && item.src.el.getBoundingClientRect().top - document.documentElement.clientHeight <= options.threshold) {
             item.src.el.src = item.value;
+            if (options.class) {
+                item.src.el.classList.add(options.class);
+            }
             delete stack[key];
         }
 
