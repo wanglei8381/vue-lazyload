@@ -66,14 +66,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Vue = __webpack_require__(2);
 
+	var list = ['http://img.fengimage.com/Fi6z2JHmhsY6qbcmuVuf4Qve6GLH?imageView2/1/', 'http://img.fengimage.com/FsCQqxwquLfYzV5_SoyUJfrs9NU3?imageView2/1/', 'http://img.fengimage.com/FqpXqoWgfum5_ydXdzwd5EMdG9z2?imageView2/1/', 'http://img.fengimage.com/FriiGQmblFT2wRcM1PWRp7fhrNQg?imageView2/1/', 'http://img.fengimage.com/Fm6-TMqr544XVWvH29cmqWdxlFoF?imageView2/1/', 'http://img.fengimage.com/Fh9Q_jldmgvzl0Zb63g1YvFRFoPl?imageView2/1/', 'http://img.fengimage.com/FhcD4UydQpdS6mgPSgvMRY-6sv_K?imageView2/1/', 'http://img.fengimage.com/FndVFLF5kLdChWEQOHcoReoiDPUo?imageView2/1/', 'http://img.fengimage.com/FneZy4q_e2ucfFRhIhNPJ-4FYxmT?imageView2/1/', 'http://img.fengimage.com/FjnlESfoX4oDTWMz0--5rNNvXv3Q?imageView2/1/', 'http://img.fengimage.com/FsTz5TIogMu7V0dg4corY7FssqzF?imageView2/1/', 'http://img.fengimage.com/Fic-_jRRUxCm5_w_NzziWo0-7ks4?imageView2/1/', 'http://img.fengimage.com/Fl8pZZLPlkfkio3v-kClhLhY2qtA?imageView2/1/', 'http://img.fengimage.com/Fnh0E_Dk_BsBShcpvSpw7pdOP8tQ?imageView2/1/', 'http://img.fengimage.com/FmNAM4xD_tJeRTAvtJEU_z2VGFJ9?imageView2/1/'];
+
 	Vue.use(vueLazyload, {
-	    threshold: 100
+	    threshold: 0
 	});
 
 	var vm = new Vue({
 	    el: '#example',
 	    data: {
-	        list: ['http://img.fengimage.com/Fi6z2JHmhsY6qbcmuVuf4Qve6GLH?imageView2/1/', 'http://img.fengimage.com/FsCQqxwquLfYzV5_SoyUJfrs9NU3?imageView2/1/', 'http://img.fengimage.com/FqpXqoWgfum5_ydXdzwd5EMdG9z2?imageView2/1/', 'http://img.fengimage.com/FriiGQmblFT2wRcM1PWRp7fhrNQg?imageView2/1/', 'http://img.fengimage.com/Fm6-TMqr544XVWvH29cmqWdxlFoF?imageView2/1/', 'http://img.fengimage.com/Fh9Q_jldmgvzl0Zb63g1YvFRFoPl?imageView2/1/', 'http://img.fengimage.com/FhcD4UydQpdS6mgPSgvMRY-6sv_K?imageView2/1/', 'http://img.fengimage.com/FndVFLF5kLdChWEQOHcoReoiDPUo?imageView2/1/', 'http://img.fengimage.com/FneZy4q_e2ucfFRhIhNPJ-4FYxmT?imageView2/1/', 'http://img.fengimage.com/FjnlESfoX4oDTWMz0--5rNNvXv3Q?imageView2/1/', 'http://img.fengimage.com/FsTz5TIogMu7V0dg4corY7FssqzF?imageView2/1/', 'http://img.fengimage.com/Fic-_jRRUxCm5_w_NzziWo0-7ks4?imageView2/1/', 'http://img.fengimage.com/Fl8pZZLPlkfkio3v-kClhLhY2qtA?imageView2/1/', 'http://img.fengimage.com/Fnh0E_Dk_BsBShcpvSpw7pdOP8tQ?imageView2/1/', 'http://img.fengimage.com/FmNAM4xD_tJeRTAvtJEU_z2VGFJ9?imageView2/1/']
+	        list: []
+	    },
+	    ready() {
+	        setTimeout(() => {
+	            this.list = list;
+	        }, 1000);
 	    }
 	});
 
@@ -106,9 +113,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this._isImg && options.placeholder) {
 	                this.el.src = options.placeholder;
 	            }
-	            this.vm.$on('hook:ready', () => {
-	                internalCompute(this._uid);
-	            });
 	        },
 	        update: function (value) {
 	            if (this._isImg) {
@@ -116,14 +120,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    value: value,
 	                    src: this
 	                };
+	                this.vm.$nextTick(() => {
+	                    internalCompute(this._uid);
+	                });
 	            }
 	        },
-	        unbind: function () {}
+	        unbind: function () {
+	            if (stack[this._uid]) {
+	                delete stack[this._uid];
+	            }
+	        }
 	    });
 
 	    function internalCompute(key) {
 	        let item = stack[key];
-	        if (item && item.src.el.getBoundingClientRect().top - document.documentElement.clientHeight <= options.threshold) {
+	        if (item && item.value && item.src.el.getBoundingClientRect().top - document.documentElement.clientHeight <= options.threshold) {
 	            item.src.el.src = item.value;
 	            delete stack[key];
 	        }

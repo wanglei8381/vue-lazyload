@@ -23,9 +23,6 @@ lazyload.install = function (Vue, options) {
             if (this._isImg && options.placeholder) {
                 this.el.src = options.placeholder;
             }
-            this.vm.$on('hook:ready', ()=> {
-                internalCompute(this._uid);
-            });
         },
         update: function (value) {
             if (this._isImg) {
@@ -33,15 +30,21 @@ lazyload.install = function (Vue, options) {
                     value: value,
                     src: this
                 };
+                this.vm.$nextTick(()=> {
+                    internalCompute(this._uid);
+                });
             }
         },
         unbind: function () {
+            if (stack[this._uid]) {
+                delete stack[this._uid];
+            }
         }
     });
 
     function internalCompute(key) {
         let item = stack[key];
-        if (item && item.src.el.getBoundingClientRect().top - document.documentElement.clientHeight <= options.threshold) {
+        if (item && item.value && item.src.el.getBoundingClientRect().top - document.documentElement.clientHeight <= options.threshold) {
             item.src.el.src = item.value;
             delete stack[key];
         }
