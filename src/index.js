@@ -12,8 +12,10 @@ lazyload.install = function (Vue, options) {
 
     //options.placeholder: 占位符
     //options.threshold:值为数字,距离视窗底部多少像素开始加载
+    //options.clientHeight:可视区高度,主要解决在某些情况下可视区高度为0
     options = options || {};
     options.threshold = isNumber(options.threshold) ? options.threshold : 0;
+    options.clientHeight = isNumber(options.clientHeight) ? options.clientHeight : 0;
     var stack = {};
     var uid = 0;
     Vue.directive('lazy', {
@@ -42,9 +44,15 @@ lazyload.install = function (Vue, options) {
         }
     });
 
+    //手动触发一次懒加载计算
+    Vue.prototype.$lazyload = function () {
+        compute();
+    }
+
     function internalCompute(key) {
         let item = stack[key];
-        if (item && item.value && item.src.el.getBoundingClientRect().top - document.documentElement.clientHeight <= options.threshold) {
+        let clientHeight = options.clientHeight || document.documentElement.clientHeight || window.innerHeight;
+        if (item && item.value && item.src.el.getBoundingClientRect().top - clientHeight <= options.threshold) {
             item.src.el.src = item.value;
             if (options.class) {
                 item.src.el.classList.add(options.class);
@@ -64,6 +72,7 @@ lazyload.install = function (Vue, options) {
     }
 
     window.addEventListener('scroll', compute, false);
+
 }
 
 function isNumber(obj) {

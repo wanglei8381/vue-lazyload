@@ -31,6 +31,7 @@ var list = [
 
 Vue.use(vueLazyload, {
     threshold: 0,
+    clientHeight: 500,
     class:'loaded'
 });
 
