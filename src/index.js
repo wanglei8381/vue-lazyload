@@ -18,6 +18,7 @@ lazyload.install = function (Vue, options) {
     options.clientHeight = isNumber(options.clientHeight) ? options.clientHeight : 0;
     var stack = {};
     var uid = 0;
+    var flag = true;
     Vue.directive('lazy', {
         bind: function () {
             this._uid = uid++;
@@ -32,6 +33,10 @@ lazyload.install = function (Vue, options) {
                     value: value,
                     src: this
                 };
+                if (flag) {
+                    window.addEventListener('scroll', compute, false);
+                }
+                flag = false;
                 this.vm.$nextTick(()=> {
                     internalCompute(this._uid);
                 });
@@ -61,6 +66,7 @@ lazyload.install = function (Vue, options) {
         }
 
         if (Object.keys(stack).length === 0) {//清除事件
+            flag = true;
             window.removeEventListener('scroll', compute, false);
         }
     }
