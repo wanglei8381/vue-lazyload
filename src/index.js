@@ -20,31 +20,37 @@ lazyload.install = function (Vue, options) {
     var uid = 0;
     var flag = true;
     Vue.directive('lazy', {
-        bind: function () {
-            this._uid = uid++;
-            this._isImg = this.el.nodeName.toUpperCase() === 'IMG';
-            if (this._isImg && options.placeholder && !this.el.src) {
-                this.el.src = options.placeholder;
+        bind: function (el) {
+            el._uid = uid++;
+            el._isImg = el.nodeName.toUpperCase() === 'IMG';
+            if (el._isImg && options.placeholder && !el.src) {
+                el.src = options.placeholder;
             }
         },
-        update: function (value) {
-            if (this._isImg) {
-                stack[this._uid] = {
-                    value: value,
-                    src: this
+        inserted: function (el, binding) {
+            binding.def.update(el, binding);
+        },
+        update: function (el, binding) {
+            if (binding.value === binding.oldValue) {
+                return;
+            }
+            if (el._isImg) {
+                stack[el._uid] = {
+                    value: binding.value,
+                    el: el
                 };
                 if (flag) {
                     window.addEventListener('scroll', compute, false);
                 }
                 flag = false;
-                this.vm.$nextTick(()=> {
-                    internalCompute(this._uid);
-                });
+                setTimeout(()=> {
+                    internalCompute(el._uid);
+                }, 0);
             }
         },
-        unbind: function () {
-            if (stack[this._uid]) {
-                delete stack[this._uid];
+        unbind: function (el) {
+            if (stack[el._uid]) {
+                delete stack[el._uid];
             }
         }
     });
@@ -57,10 +63,10 @@ lazyload.install = function (Vue, options) {
     function internalCompute(key) {
         let item = stack[key];
         let clientHeight = options.clientHeight || document.documentElement.clientHeight || window.innerHeight;
-        if (item && item.value && item.src.el.getBoundingClientRect().top - clientHeight <= options.threshold) {
-            item.src.el.src = item.value;
+        if (item && item.value && item.el.getBoundingClientRect().top - clientHeight <= options.threshold) {
+            item.el.src = item.value;
             if (options.class) {
-                item.src.el.classList.add(options.class);
+                item.el.classList.add(options.class);
             }
             delete stack[key];
         }

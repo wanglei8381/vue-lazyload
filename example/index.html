@@ -25,7 +25,7 @@
         }
     </style>
 </head>
-<body id="example">
+<body>
 <h1>vue-lazyload</h1>
 <!--<ul>
     <li>
@@ -76,7 +76,8 @@
 </li>
 </ul>-->
 
-<ul>
+<ul id="example">
+    <!--<img class="lazy" height="200px" v-lazy="src" alt="加载中...">-->
     <li v-for="item of list">
         <img class="lazy" height="200px" v-lazy="item" alt="加载中...">
         <p style="width:100px">preserve-3d符合我们真实世界的思维认识。比方说，你让妹子右转了45度，此时妹子脑袋左转45度想你吐舌卖萌，妹子的脸蛋应该和你是面对面平行的。</p>

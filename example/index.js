@@ -35,12 +35,13 @@ Vue.use(vueLazyload, {
     class:'loaded'
 });
 
-var vm = new Vue({
+window.vm = new Vue({
     el: '#example',
     data: {
-        list: []
+        list: [],
+        src: 'http://img.fengimage.com/FmNAM4xD_tJeRTAvtJEU_z2VGFJ9?imageView2/1/'
     },
-    ready(){
+    mounted(){
         setTimeout(()=> {
             this.list = list;
         }, 1000);

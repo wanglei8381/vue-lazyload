@@ -1,5 +1,5 @@
 #vue-lazyload
-基于vue的图片懒加载插件
+基于vue的图片懒加载插件,从v0.0.6支持vue2.0
 
 ###API
 1:安装 npm install vue-img-lazyload <br><br>
