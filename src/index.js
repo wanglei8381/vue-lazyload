@@ -43,7 +43,7 @@ lazyload.install = function (Vue, options) {
                     window.addEventListener('scroll', compute, false);
                 }
                 flag = false;
-                setTimeout(()=> {
+                setTimeout(function() {
                     internalCompute(el._uid);
                 }, 0);
             }
