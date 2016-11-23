@@ -61,8 +61,8 @@ lazyload.install = function (Vue, options) {
     }
 
     function internalCompute(key) {
-        let item = stack[key];
-        let clientHeight = options.clientHeight || document.documentElement.clientHeight || window.innerHeight;
+        var item = stack[key];
+        var clientHeight = options.clientHeight || document.documentElement.clientHeight || window.innerHeight;
         if (item && item.value && item.el.getBoundingClientRect().top - clientHeight <= options.threshold) {
             item.el.src = item.value;
             if (options.class) {
@@ -78,7 +78,7 @@ lazyload.install = function (Vue, options) {
     }
 
     function compute() {
-        for (let key in stack) {
+        for (var key in stack) {
             internalCompute(key);
         }
     }
