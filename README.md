@@ -9,6 +9,7 @@ options.threshold:值为数字,距离视窗底部多少像素开始加载<br>
 options.class:图片样式<br><br>
 3:指令<br>
 < img v-lazy="src"><br>
+< img v-lazy.literal data-src="src"><br>
 ####v0.0.4添加clientHeight
 设置可视区高度,主要解决在某些情况下可视区高度为0
 ####v0.0.3添加class

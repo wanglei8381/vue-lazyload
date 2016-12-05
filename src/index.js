@@ -31,19 +31,24 @@ lazyload.install = function (Vue, options) {
             binding.def.update(el, binding);
         },
         update: function (el, binding) {
-            if (binding.value === binding.oldValue) {
+            var value = binding.value;
+            if (binding.modifiers.literal) {
+                value = el.getAttribute('data-src');
+                el.removeAttribute('data-src');
+            } else if (binding.value === binding.oldValue) {
                 return;
             }
+
             if (el._isImg) {
                 stack[el._uid] = {
-                    value: binding.value,
+                    value: value,
                     el: el
                 };
                 if (flag) {
                     window.addEventListener('scroll', compute, false);
                 }
                 flag = false;
-                setTimeout(function() {
+                setTimeout(function () {
                     internalCompute(el._uid);
                 }, 0);
             }
