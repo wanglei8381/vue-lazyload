@@ -23,8 +23,12 @@ lazyload.install = function (Vue, options) {
         bind: function (el) {
             el._uid = uid++;
             el._isImg = el.nodeName.toUpperCase() === 'IMG';
-            if (el._isImg && options.placeholder && !el.src) {
-                el.src = options.placeholder;
+            if (options.placeholder) {
+                if (el._isImg && !el.src) {
+                    el.src = options.placeholder;
+                } else if (getComputedStyle(el).getPropertyValue('background-image').indexOf('url') === -1) {
+                    el.style.backgroundImage = 'url(' + options.placeholder + ')';
+                }
             }
         },
         inserted: function (el, binding) {
@@ -39,19 +43,18 @@ lazyload.install = function (Vue, options) {
                 return;
             }
 
-            if (el._isImg) {
-                stack[el._uid] = {
-                    value: value,
-                    el: el
-                };
-                if (flag) {
-                    window.addEventListener('scroll', compute, false);
-                }
-                flag = false;
-                setTimeout(function () {
-                    internalCompute(el._uid);
-                }, 0);
+
+            stack[el._uid] = {
+                value: value,
+                el: el
+            };
+            if (flag) {
+                window.addEventListener('scroll', compute, false);
             }
+            flag = false;
+            setTimeout(function () {
+                internalCompute(el._uid);
+            }, 0);
         },
         unbind: function (el) {
             if (stack[el._uid]) {
@@ -69,7 +72,11 @@ lazyload.install = function (Vue, options) {
         var item = stack[key];
         var clientHeight = options.clientHeight || document.documentElement.clientHeight || window.innerHeight;
         if (item && item.value && item.el.getBoundingClientRect().top - clientHeight <= options.threshold) {
-            item.el.src = item.value;
+            if (item.el._isImg) {
+                item.el.src = item.value;
+            } else {
+                item.el.style.backgroundImage = 'url(' + item.value + ')';
+            }
             if (options.class) {
                 item.el.classList.add(options.class);
             }
