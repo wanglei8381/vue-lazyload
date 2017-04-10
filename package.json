@@ -1,6 +1,6 @@
 {
   "name": "vue-img-lazyload",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "image-lazyload plugin for vue",
   "main": "src/index.js",
   "author": "wanglei<lei.wang@wuage.com>",
@@ -9,24 +9,7 @@
     "url": "git@github.com:wanglei8381/vue-lazyload.git"
   },
   "devDependencies": {
-    "babel-core": "^6.9.0",
-    "babel-loader": "^6.2.4",
-    "babel-plugin-transform-runtime": "^6.9.0",
-    "babel-preset-es2015": "^6.9.0",
-    "css-loader": "^0.23.1",
-    "director": "^1.2.8",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "html-loader": "^0.4.3",
-    "jsx-loader": "^0.13.2",
-    "less": "^2.7.1",
-    "less-loader": "^2.2.3",
-    "sass-loader": "^3.2.0",
-    "style-loader": "^0.13.1",
-    "stylus-loader": "^2.1.0",
-    "vue-html-loader": "^1.2.2",
-    "vue-loader": "^8.5.2",
-    "vue-style-loader": "^1.0.0",
-    "webpack": "^1.13.1"
+    "wag-cli": "^2.2.1"
   },
   "license": "MIT"
 }

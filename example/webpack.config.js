@@ -1,23 +1,10 @@
-var path = require('path')
-
+// wag-cli 公司内部项目
+let path = require('path')
 module.exports = {
-    entry: './index.js',
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'index.js',
-        library: 'Vue',
-        libraryTarget: 'umd'
-    },
-    module: {
-        loaders: [
-            {test: /\.styl$/, loader: "style!css!stylus"},
-            {test: /\.js$/, loader: 'babel'}
-        ]
-    },
-    resolve: {
-        alias: {
-            'vue$': 'vue/dist/vue.js'
-        },
-        extensions: ['', '.js', '.json', '.vue']
-    },
+  files: {
+    'example/src/index.js': 1
+  },
+  publicPath: './',
+  context: path.resolve(__dirname, '../'),
+  index: 'example/index.html'
 }

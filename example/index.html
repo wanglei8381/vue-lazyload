@@ -26,20 +26,22 @@
   </style>
 </head>
 <body>
-<h1>vue-lazyload</h1>
-<ul id="example">
-  <li v-lazy.literal data-src="http://img.fengimage.com/Fi6z2JHmhsY6qbcmuVuf4Qve6GLH?imageView2/1/">
-    <p style="width:100px">preserve-3d符合我们真实世界的思维认识。比方说，你让妹子右转了45度，此时妹子脑袋左转45度想你吐舌卖萌，妹子的脸蛋应该和你是面对面平行的。</p>
-  </li>
-</ul>
+<div id="app">
+  <h1>vue-lazyload</h1>
+  <ul id="example">
+    <img v-lazy="'http://img2.imgtn.bdimg.com/it/u=3495161387,2602242859&fm=23&gp=0.jpg'">
+    <li v-lazy="'http://img2.imgtn.bdimg.com/it/u=2223061799,1548388797&fm=214&gp=0.jpg'">
+      <p style="width:100px">preserve-3d符合我们真实世界的思维认识。比方说，你让妹子右转了45度，此时妹子脑袋左转45度想你吐舌卖萌，妹子的脸蛋应该和你是面对面平行的。</p>
+    </li>
+  </ul>
 
-<ul>
-  <!--<img class="lazy" height="200px" v-lazy="src" alt="加载中...">-->
-  <li v-for="item of list">
-    <img class="lazy" height="200px" v-lazy="item" alt="加载中...">
-    <p style="width:100px">preserve-3d符合我们真实世界的思维认识。比方说，你让妹子右转了45度，此时妹子脑袋左转45度想你吐舌卖萌，妹子的脸蛋应该和你是面对面平行的。</p>
-  </li>
-</ul>
-<script src="dist/index.js"></script>
+  <ul>
+    <!--<img class="lazy" height="200px" v-lazy="src" alt="加载中...">-->
+    <li v-for="item of list">
+      <img class="lazy" height="200px" v-lazy="item" alt="加载中...">
+      <p style="width:100px">preserve-3d符合我们真实世界的思维认识。比方说，你让妹子右转了45度，此时妹子脑袋左转45度想你吐舌卖萌，妹子的脸蛋应该和你是面对面平行的。</p>
+    </li>
+  </ul>
+</div>
 </body>
 </html>

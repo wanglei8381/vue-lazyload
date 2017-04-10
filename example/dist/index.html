@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>vue-lazyload</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <style>* {
+    margin: 0
+  }
+
+  .lazy {
+    -webkit-transition: opacity .5s linear;
+    -moz-transition: opacity .5s linear;
+    -o-transition: opacity .5s linear;
+    transition: opacity .5s linear;
+    max-width: 100%;
+    opacity: .5
+  }
+
+  .lazy.loaded {
+    opacity: 1
+  }</style>
+</head>
+<body>
+<div id="app"><h1>vue-lazyload</h1>
+  <ul id="example"><img v-lazy="'http://img2.imgtn.bdimg.com/it/u=3495161387,2602242859&fm=23&gp=0.jpg'">
+    <li v-lazy="'http://img2.imgtn.bdimg.com/it/u=2223061799,1548388797&fm=214&gp=0.jpg'"><p style="width:100px">
+      preserve-3d符合我们真实世界的思维认识。比方说，你让妹子右转了45度，此时妹子脑袋左转45度想你吐舌卖萌，妹子的脸蛋应该和你是面对面平行的。</p></li>
+  </ul>
+  <ul>
+    <li v-for="item of list"><img class="lazy" height="200px" v-lazy="item" alt="加载中...">
+      <p style="width:100px">preserve-3d符合我们真实世界的思维认识。比方说，你让妹子右转了45度，此时妹子脑袋左转45度想你吐舌卖萌，妹子的脸蛋应该和你是面对面平行的。</p></li>
+  </ul>
+</div>
+<script type="text/javascript" src="./index.js"></script>
+</body>
+</html>
